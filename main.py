@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 def solveTSP_SA(nodesDF, costDict, timeLimit):
     
     ORS_API_KEY = '5b3ce3597851110001cf6248cd17d3535dc040458d794031286771a4'
-    
-   
     
     def solve_tsp_nn(startNode, costDict, nodesDF): 
         """
@@ -61,9 +56,8 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
         nn_route.append(startNode)
 
         return nn_route    
-
-# -----------------------------------------Calculating Cost Function-----------------------------------------
-
+    
+# Calculating Cost Function
     def tsp_cost(route, costDict):
         cost = 0
 
@@ -76,8 +70,7 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
 
         return cost
 
-# -----------------------------------------Reversal Neighbor Fucntion-----------------------------------------
-    
+#Reversal Neighbor Fucntion 
     import random
     import math
     import time
@@ -101,8 +94,8 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
         newRoute.append(newRoute[0])
 
         return newRoute
-
-#-----------------------------------------Initialising Values-----------------------------------------
+    
+#Initialising Values
     
     T0 = 100000    # Initial Temperature
     I = 20
@@ -111,7 +104,7 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
     Cutoff_time = timeLimit  # Time Limit describing MAX RUN TIME 
     
     
-#-------------------------------Initial Solution assignment for Nearest Neighbour function-----------------------------------------
+#Initial Solution assignment for Nearest Neighbour function
 
     X0 = solve_tsp_nn(1, costDict, nodesDF) # Initial Solution
     Xcur = X0    # Current Solution = Initial Solution from Nearest Neighbour Solution
@@ -119,14 +112,12 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
     Z_cur = tsp_cost(X0, costDict) 
 #     Xcur, Z_cur
     
-#-------------------------------Solution assignment from TSP Neighbour function-------------------------------
+#Solution assignment from TSP Neighbour function
     Xcount = tsp_neighbor(myList)
     Z_Xcount = tsp_cost(Xcount,costDict)
 #     Xcount, Z_Xcount
     
-
-    
-# ------------------------------ PHASE II Simmulated Anealing-------------------------------
+#PHASE II Simmulated Anealing
     T_cur = T0 
     Z_best = Z_cur
     count = 1   # Initialising Count value to 1
@@ -152,7 +143,7 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
     #             print("3rd",Z_best)
     #             print("3rd",X_best)
 
-# -------------------------------PHASE III Simmulated Anealing-------------------------------
+# PHASE III Simmulated Anealing
         
         T_cur = T_cur - delta
     #     print("after", T_cur, T_final)
@@ -162,13 +153,11 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
         else:
             count+=1
         
-# Creating assigmentsDF = Output of solveTSP_SA-----------------------------------
+# Creating assigmentsDF = Output of solveTSP_SA
     import veroviz as vrv
     import urllib3
     urllib3.disable_warnings()
-    
-    
-    
+   
     assignmentsDF = vrv.createAssignmentsFromNodeSeq2D(
     nodeSeq          = X_best,        # This is what you should have found above, via SA.
     nodes            = nodesDF,       # This is an input to your solveTSP_SA() function
@@ -177,5 +166,3 @@ def solveTSP_SA(nodesDF, costDict, timeLimit):
     dataProviderArgs = {'APIkey' : ORS_API_KEY})    # You'll need to replace ORS_API_KEY with your actual key
     
     return assignmentsDF
-    
-
