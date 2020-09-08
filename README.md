@@ -1,6 +1,6 @@
-# TSP_Veroviz
+# Vehicle Route optimization using Veroviz
 
-Travelling Salesman Problem using Simulated Annealing
+Travelling Salesman Problem using nearest neighbour and simulated annealing heurisitcs
 
 The function solveTSP_SA accepts 3 inputs:
 
